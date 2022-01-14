@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package genproto;
+option go_package="genproto/admin_api_gateway";
+
+import "google/api/annotations.proto";
+import "gateway_profession.proto";
+
+service ProfessionApiGateway {
+    rpc Create(GatewayCreateProfessionReq) returns (GatewayProfessionId) {
+        option (google.api.http) = {
+            post: "/v1/profession"
+            body: "*"
+        };
+    }
+
+    rpc Get(GatewayProfessionId) returns (GatewayProfession) {
+        option (google.api.http) = {
+            get: "/v1/profession/{profession_id}"
+        };
+    }
+
+    rpc GetAll(GatewayGetAllProfessionRequest) returns (GatewayGetAllProfessionResponse) {
+        option (google.api.http) = {
+            get: "/v1/profession"
+        };
+    }
+}

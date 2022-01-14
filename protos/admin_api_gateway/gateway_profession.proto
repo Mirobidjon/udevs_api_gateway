@@ -1,0 +1,28 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/admin_api_gateway";
+
+message GatewayProfession {
+    string id = 1;
+    string name = 2;
+}
+
+message GatewayCreateProfessionReq {
+    string name = 1;
+}
+
+message GatewayProfessionId {
+    string profession_id = 1;
+}
+
+message GatewayGetAllProfessionRequest {
+    uint32 limit = 1;
+    uint32 offset = 2;
+    string name = 3;
+}
+
+message GatewayGetAllProfessionResponse {
+    repeated GatewayProfession professions = 1;
+    uint32 count = 2;
+}
