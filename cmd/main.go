@@ -76,11 +76,16 @@ func RunHttpServer(ctx context.Context, log logger.Logger, cfg config.Config) er
 		Addr: cfg.HttpPort,
 		// add handler with middleware
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/api") {
+			if strings.HasPrefix(r.URL.Path, "/v1") {
+
+				fmt.Println("Hello world")
+				fmt.Println("header platform-id: ", r.Header.Get("platform-id"))
 				// custom function
+				r.Header.Add("Grpc-metadata-id", r.Header.Get("platform-id"))
 				mux.ServeHTTP(w, r)
 				return
 			}
+
 			httpMux.ServeHTTP(w, r)
 			// oa.ServeHTTP(w, r)
 		}),

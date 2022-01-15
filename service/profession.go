@@ -7,6 +7,7 @@ import (
 	"bitbucket.org/udevs/example_api_gateway/genproto/admin_api_gateway"
 	"bitbucket.org/udevs/example_api_gateway/pkg/logger"
 	"bitbucket.org/udevs/example_api_gateway/service/grpc_client"
+	"google.golang.org/grpc/metadata"
 )
 
 type professionService struct {
@@ -24,6 +25,15 @@ func NewProfessionService(client grpc_client.ServiceManager, log logger.Logger) 
 
 func (h *professionService) Create(ctx context.Context, req *admin_api_gateway.GatewayCreateProfessionReq) (*admin_api_gateway.GatewayProfessionId, error) {
 	fmt.Printf("\n\nCreate Profession request!!  %+v\n\n", req)
+
+	md, ok := metadata.FromIncomingContext(ctx)
+
+	fmt.Println("md: ", md)
+	if !ok || len(md["id"]) < 1 || md["id"][0] == "" {
+		fmt.Println("adashding ukam")
+	} else {
+		fmt.Println("ok good")
+	}
 
 	return &admin_api_gateway.GatewayProfessionId{
 		ProfessionId: "Successfully created",
